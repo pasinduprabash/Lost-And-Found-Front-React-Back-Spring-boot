@@ -64,7 +64,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto selectUser(String id) throws Exception {
-        return null;
+
+        Optional <UserEntity> foundedEntity = userDao.findById(id);
+        if(!foundedEntity.isPresent()){
+            throw new Exception("User Not Found");
+        }
+
+        UserEntity userEntity = foundedEntity.get();
+        UserDto userDto = new UserDto(
+                userEntity.getId(),
+                userEntity.getFirstName(),
+                userEntity.getLastName(),
+                userEntity.getAddress(),
+                userEntity.getEmail(),
+                userEntity.getContactNo(),
+                userEntity.getPassword()
+        );
+
+        return userDto;
     }
 
     @Override
